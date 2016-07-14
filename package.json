@@ -1,0 +1,24 @@
+{
+  "name": "sales-taxes-problem",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --reporter spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ilbonte/sales-taxes-problem.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ilbonte/sales-taxes-problem/issues"
+  },
+  "homepage": "https://github.com/ilbonte/sales-taxes-problem#readme",
+  "dependencies": {
+    "chai": "^3.5.0",
+    "commander": "^2.9.0",
+    "mocha": "^2.5.3"
+  }
+}
