@@ -48,10 +48,10 @@ function getTextFromFile(filePath, callback) {
 
 function start(filePath, text) {
     const print = new Printer(filePath);
-    const cart = new Cart();
     const lines = utils.textToArray(text);
     const textSyntax = utils.checkSyntax(lines);
     if (textSyntax.isValid) {
+      const cart = new Cart(lines);
         // cart.calculateTaxes();
         cart.receipt = 'mock';
         print.setText(cart.receipt);
