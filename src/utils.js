@@ -15,3 +15,8 @@ exports.checkSyntax = function(lines) {
     });
     return obj;
 };
+
+exports.calculateTaxes= function(price,rate){
+  const percentage=(price*rate)/100;
+  return (Math.ceil(percentage*20)/20);
+};

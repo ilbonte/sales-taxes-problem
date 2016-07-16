@@ -38,4 +38,16 @@ describe("Utils function", function() {
             expect(utils.checkSyntax(utils.textToArray(error4)).isValid).to.be.false;
         });
     });
+
+    describe('calculate the tax to be paied rounded up to the nearest 0.05', function() {
+        checkTaxCalculation(0, 10, 0);
+        checkTaxCalculation(12.13, 10, 1.25);
+        checkTaxCalculation(12.13, 5, 0.65);
+    });
 });
+
+function checkTaxCalculation(price, rate, result) {
+    it('return the taxes to paied for an item with price: ' + price + ' and tax rate: ' + rate, function() {
+        expect(utils.calculateTaxes(price, rate)).to.be.equal(result);
+    });
+}

@@ -7,24 +7,13 @@ program
     .option('-p, --path [path]', 'Print receipt to screen')
     .option('-d, --display', 'Print receipt to screen')
     .parse(process.argv);
-if (typeof program.path === 'string') {
+if (pathIsPresent()) {
     fs.stat(program.path, (err, stat) => {
         if (err === null) {
             if (stat.isFile()) {
-                console.log('file');
                 getTextFromFile(program.path, start);
             } else if (stat.isDirectory()) {
-                console.log('directory');
-                fs.readdir(program.path, (err, files) => {
-                    if (err) throw err;
-                    files.forEach((itemName) => {
-                        const itemPath = program.path + '\\' + itemName;
-                        //ignore directories
-                        if (fs.statSync(itemPath).isFile()) {
-                            getTextFromFile(itemPath, start);
-                        }
-                    });
-                });
+                readFilesInDirectory();
             }
         } else if (err.code == 'ENOENT') {
             // file does not exist
@@ -52,9 +41,9 @@ function start(filePath, text) {
     const textSyntax = utils.checkSyntax(lines);
     if (textSyntax.isValid) {
       const cart = new Cart(lines);
-        // cart.calculateTaxes();
-        cart.receipt = 'mock';
-        print.setText(cart.receipt);
+        cart.calculateTotal();
+
+        print.setText(cart.getReceipt());
         if (program.display) {
             print.toScreen();
         }
@@ -63,4 +52,21 @@ function start(filePath, text) {
         console.error('Error in ' + print.fileName + ' at line ' + textSyntax.wrongLines.join(', '));
     }
 
+}
+
+function readFilesInDirectory(){
+  fs.readdir(program.path, (err, files) => {
+      if (err) throw err;
+      files.forEach((itemName) => {
+          const itemPath = program.path + '\\' + itemName;
+          //ignore directories
+          if (fs.statSync(itemPath).isFile()) {
+              getTextFromFile(itemPath, start);
+          }
+      });
+  });
+}
+
+function pathIsPresent(){
+  return typeof program.path === 'string';
 }
