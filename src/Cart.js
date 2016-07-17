@@ -3,11 +3,11 @@ module.exports = class Cart {
     constructor(lines) {
         this.lines = lines;
         this.products = [];
-        this._linesToProducts();
+        this.linesToProducts();
         this.totalTaxes = 0;
         this.totalPrice = 0;
     }
-    _linesToProducts() {
+    linesToProducts() {
         this.lines.forEach(line => {
             this.products.push(new Product(line));
         });

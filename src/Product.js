@@ -5,9 +5,10 @@ const import_duty_rate= 5;
 module.exports = class Product {
     constructor(line) {
         this.line = line;
-        this.extractData();
+        this.extractDataFromLine();
     }
-    extractData() {
+
+    extractDataFromLine() {
         const regEx = /(\s)(.+)\sat\s+([0-9]*[.][0-9][0-9])/;
         const [quantity, space, itemText, price] = this.line.split(regEx);
         const name = this.extractName(itemText);
@@ -20,6 +21,7 @@ module.exports = class Product {
         this.taxes=0.00;
         this.totalPrice=0.00;
     }
+
     extractName(itemText) {
         if (itemText.includes(' of ')) {
             itemText= itemText.split(/\sof\s(.+)/)[1];
@@ -30,9 +32,11 @@ module.exports = class Product {
 
         return itemText;
     }
+
     findIfImported(text) {
         return text.includes('imported ');
     }
+
     findIfExempt(productName) {
         for (var category in categories) {
             if (categories.hasOwnProperty(category)) {
@@ -43,12 +47,15 @@ module.exports = class Product {
         }
         return false;
     }
+
     isExempt(){
       return this.exempt;
     }
+
     isImported(){
       return this.imported;
     }
+    
     calculateTotalPrice(){
       this.taxes=0.00;
       if(!this.isExempt()){
