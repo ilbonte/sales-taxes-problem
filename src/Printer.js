@@ -1,16 +1,18 @@
 const fs = require('fs');
 const path = require('path');
 const mkdirp = require('mkdirp');
+const outputFolder = 'output';
 module.exports = class Printer {
     constructor(filePath) {
         this.fileName = path.basename(filePath);
         this.path = path.dirname(filePath);
     }
-    
+
     toFile() {
-        mkdirp(this.path + '/out', (err) => {
+        path.join(this.path, 'outputFolder');
+        mkdirp(path.join(this.path, 'outputFolder'), (err) => {
             if (err) throw err;
-            fs.writeFile(this.path + '/out/' + this.fileName, this.text, (err) => {
+            fs.writeFile(path.join(this.path, 'outputFolder', this.fileName), this.text, (err) => {
                 if (err) throw err;
             });
 
