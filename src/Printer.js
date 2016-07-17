@@ -6,10 +6,7 @@ module.exports = class Printer {
         this.fileName = path.basename(filePath);
         this.path = path.dirname(filePath);
     }
-    log() {
-        console.log('file:' + this.fileName);
-        console.log('text' + this.text);
-    }
+    
     toFile() {
         mkdirp(this.path + '/out', (err) => {
             if (err) throw err;

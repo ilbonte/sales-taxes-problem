@@ -1,3 +1,4 @@
+// https://github.com/xpeppers/sales-taxes-problem
 const program = require('commander');
 const fs = require('fs');
 const utils = require('./utils.js');
@@ -40,7 +41,7 @@ function start(filePath, text) {
     const lines = utils.textToArray(text);
     const textSyntax = utils.checkSyntax(lines);
     if (textSyntax.isValid) {
-      const cart = new Cart(lines);
+        const cart = new Cart(lines);
         cart.calculateTotal();
 
         print.setText(cart.getReceipt());
@@ -54,19 +55,22 @@ function start(filePath, text) {
 
 }
 
-function readFilesInDirectory(){
-  fs.readdir(program.path, (err, files) => {
-      if (err) throw err;
-      files.forEach((itemName) => {
-          const itemPath = program.path + '\\' + itemName;
-          //ignore directories
-          if (fs.statSync(itemPath).isFile()) {
-              getTextFromFile(itemPath, start);
-          }
-      });
-  });
+function readFilesInDirectory() {
+    fs.readdir(program.path, (err, files) => {
+        if (err) throw err;
+        files.forEach((itemName) => {
+            const itemPath = program.path + '\\' + itemName;
+            if (isItemFile(itemPath)) {
+                getTextFromFile(itemPath, start);
+            }
+        });
+    });
 }
 
-function pathIsPresent(){
-  return typeof program.path === 'string';
+function pathIsPresent() {
+    return typeof program.path === 'string';
+}
+
+function isItemFile(itemPath) {
+    return fs.statSync(itemPath).isFile();
 }

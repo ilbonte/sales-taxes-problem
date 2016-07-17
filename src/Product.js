@@ -21,7 +21,6 @@ module.exports = class Product {
         this.totalPrice=0.00;
     }
     extractName(itemText) {
-
         if (itemText.includes(' of ')) {
             itemText= itemText.split(/\sof\s(.+)/)[1];
         }
