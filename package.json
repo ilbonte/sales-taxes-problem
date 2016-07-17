@@ -1,8 +1,6 @@
 {
   "name": "sales-taxes-problem",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
   "scripts": {
     "test": "mocha --reporter spec"
   },
@@ -10,7 +8,7 @@
     "type": "git",
     "url": "git+https://github.com/ilbonte/sales-taxes-problem.git"
   },
-  "author": "",
+  "author": "Davide Bontempelli",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ilbonte/sales-taxes-problem/issues"

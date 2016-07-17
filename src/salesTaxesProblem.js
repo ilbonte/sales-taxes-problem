@@ -4,28 +4,34 @@ const fs = require('fs');
 const utils = require('./utils.js');
 const Printer = require('./Printer.js');
 const Cart = require('./Cart.js');
-program
-    .option('-p, --path [path]', 'Print receipt to screen')
-    .option('-d, --display', 'Print receipt to screen')
-    .parse(process.argv);
-if (pathIsPresent()) {
+
+
+
+exports.startApplication= function(){
+  program
+  .option('-p, --path [path]', 'Print receipt to screen')
+  .option('-d, --display', 'Print receipt to screen')
+  .parse(process.argv);
+  if (pathIsPresent()) {
     fs.stat(program.path, (err, item) => {
-        if (err === null) {
-            if (item.isFile()) {
-                getTextFromFile(program.path, readProductList);
-            } else if (item.isDirectory()) {
-                readFilesInDirectory();
-            }
-        } else if (err.code == 'ENOENT') {
-            // file does not exist
-            console.error('ENOENT: no such file or directory ' + err.path);
-        } else {
-            console.error('Error opening the path: ' + err.code);
+      if (err === null) {
+        if (item.isFile()) {
+          getTextFromFile(program.path, readProductList);
+        } else if (item.isDirectory()) {
+          readFilesInDirectory();
         }
+      } else if (err.code == 'ENOENT') {
+        // file does not exist
+        console.error('ENOENT: no such file or directory ' + err.path);
+      } else {
+        console.error('Error opening the path: ' + err.code);
+      }
     });
-} else {
+  } else {
     console.error('Path to file or directory is required');
-}
+  }
+};
+
 
 
 function getTextFromFile(filePath, callback) {
