@@ -9,11 +9,11 @@ program
     .option('-d, --display', 'Print receipt to screen')
     .parse(process.argv);
 if (pathIsPresent()) {
-    fs.stat(program.path, (err, stat) => {
+    fs.stat(program.path, (err, item) => {
         if (err === null) {
-            if (stat.isFile()) {
-                getTextFromFile(program.path, start);
-            } else if (stat.isDirectory()) {
+            if (item.isFile()) {
+                getTextFromFile(program.path, readProductList);
+            } else if (item.isDirectory()) {
                 readFilesInDirectory();
             }
         } else if (err.code == 'ENOENT') {
@@ -36,12 +36,12 @@ function getTextFromFile(filePath, callback) {
 }
 
 
-function start(filePath, text) {
+function readProductList(filePath, text) {
     const print = new Printer(filePath);
-    const lines = utils.textToArray(text);
-    const textSyntax = utils.checkSyntax(lines);
+    const textLines = utils.textToArray(text);
+    const textSyntax = utils.checkSyntax(textLines);
     if (textSyntax.isValid) {
-        const cart = new Cart(lines);
+        const cart = new Cart(textLines);
         cart.calculateTotal();
 
         print.setText(cart.getReceipt());
@@ -61,7 +61,7 @@ function readFilesInDirectory() {
         files.forEach((itemName) => {
             const itemPath = program.path + '\\' + itemName;
             if (isItemFile(itemPath)) {
-                getTextFromFile(itemPath, start);
+                getTextFromFile(itemPath, readProductList);
             }
         });
     });
