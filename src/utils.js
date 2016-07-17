@@ -2,7 +2,7 @@ exports.textToArray = function(text) {
     return text.trim().split(/\r?\n/);
 };
 exports.checkSyntax = function(lines) {
-    const reg = /[1-9]+(\s)(.+)(\sat\s+)[0-9]*[.][0-9][0-9]/;
+    const reg = /[1-9][0-9]*(\s)(.+)(\sat\s+)[0-9]*[.][0-9][0-9]/;
     let obj = {
         isValid: true,
         wrongLines: []
