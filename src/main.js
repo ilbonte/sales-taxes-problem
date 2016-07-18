@@ -47,7 +47,6 @@ function readFilesInDirectory() {
         if (err) throw err;
         files.forEach((itemName) => {
             const itemPath = path.join(program.path, itemName);
-            // const itemPath = program.path + '\\' + itemName;
             if (isItemFile(itemPath)) {
                 getTextFromFile(itemPath, readProductList);
             }
