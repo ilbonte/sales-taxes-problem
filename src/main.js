@@ -1,15 +1,15 @@
 // https://github.com/xpeppers/sales-taxes-problem
 const program = require('commander');
 const fs = require('fs');
+const path = require('path');
 const utils = require('./utils.js');
 const Printer = require('./Printer.js');
 const Cart = require('./Cart.js');
-const path = require('path');
 
 
 exports.startApplication = function() {
     program
-        .option('-p, --path [path]', 'Calculate and print receipt to file')
+        .option('-p, --path [path]', 'Calculate the price from the given file(s) and print receipt to file')
         .option('-d, --display', 'Print receipt to screen')
         .parse(process.argv);
     if (pathIsPresent()) {
