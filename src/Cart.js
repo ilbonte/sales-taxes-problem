@@ -1,4 +1,5 @@
 const Product = require('./Product');
+const endOfLine = require('os').EOL;
 module.exports = class Cart {
     constructor(lines) {
         this.lines = lines;
@@ -22,10 +23,10 @@ module.exports = class Cart {
     getReceipt() {
         let receipt = '';
         this.products.forEach(product => {
-            receipt += product.quantity + ' ' + product.itemText + ': ' + product.totalPrice.toFixed(2) + '\n';
+            receipt += product.quantity + ' ' + product.itemText + ': ' + product.totalPrice.toFixed(2) + endOfLine;
         });
-        receipt += 'Sales Taxes: ' + this.totalTaxes.toFixed(2) + '\n';
-        receipt += 'Total: ' + this.totalPrice.toFixed(2) + '\n';
+        receipt += 'Sales Taxes: ' + this.totalTaxes.toFixed(2) + endOfLine;
+        receipt += 'Total: ' + this.totalPrice.toFixed(2) + endOfLine;
         return receipt;
     }
 };
