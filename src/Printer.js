@@ -9,10 +9,10 @@ module.exports = class Printer {
     }
 
     toFile() {
-        path.join(this.path, 'outputFolder');
-        mkdirp(path.join(this.path, 'outputFolder'), (err) => {
+        path.join(this.path, outputFolder);
+        mkdirp(path.join(this.path, outputFolder), (err) => {
             if (err) throw err;
-            fs.writeFile(path.join(this.path, 'outputFolder', this.fileName), this.text, (err) => {
+            fs.writeFile(path.join(this.path, outputFolder, this.fileName), this.text, (err) => {
                 if (err) throw err;
             });
 
