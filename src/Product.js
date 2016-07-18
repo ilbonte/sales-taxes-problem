@@ -24,17 +24,18 @@ module.exports = class Product {
 
     extractName(itemText) {
         if (itemText.includes(' of ')) {
-            itemText= itemText.split(/\sof\s(.+)/)[1];
-        }
-        if(itemText.includes('imported ')){
-          itemText= itemText.replace('imported ','');
+            itemText= itemText.split(/\sof\s(.+)/)[1]; //keep only the product name 
         }
 
-        return itemText;
+        if(itemText.includes('imported')){
+          itemText= itemText.replace('imported','');
+        }
+
+        return itemText.trim();
     }
 
     findIfImported(text) {
-        return text.includes('imported ');
+        return text.includes('imported');
     }
 
     findIfExempt(productName) {
@@ -55,7 +56,7 @@ module.exports = class Product {
     isImported(){
       return this.imported;
     }
-    
+
     calculateTotalPrice(){
       this.taxes=0.00;
       if(!this.isExempt()){

@@ -1,1 +1,1 @@
-require('./src/salesTaxesProblem.js').startApplication();
+require('./src/main.js').startApplication();

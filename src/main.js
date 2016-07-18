@@ -9,7 +9,7 @@ const path = require('path');
 
 exports.startApplication = function() {
     program
-        .option('-p, --path [path]', 'Print receipt to screen')
+        .option('-p, --path [path]', 'Calculate and print receipt to file')
         .option('-d, --display', 'Print receipt to screen')
         .parse(process.argv);
     if (pathIsPresent()) {
@@ -22,7 +22,7 @@ exports.startApplication = function() {
                 }
             } else if (err.code == 'ENOENT') {
                 // file does not exist
-                console.error('ENOENT: no such file or directory ' + err.path);
+                console.error('No such file or directory ' + err.path);
             } else {
                 console.error('Error opening the path: ' + err.code);
             }
@@ -42,6 +42,19 @@ function getTextFromFile(filePath, callback) {
 }
 
 
+function readFilesInDirectory() {
+    fs.readdir(program.path, (err, files) => {
+        if (err) throw err;
+        files.forEach((itemName) => {
+            const itemPath = path.join(program.path, itemName);
+            // const itemPath = program.path + '\\' + itemName;
+            if (isItemFile(itemPath)) {
+                getTextFromFile(itemPath, readProductList);
+            }
+        });
+    });
+}
+
 function readProductList(filePath, text) {
     const print = new Printer(filePath);
     const textLines = utils.textToArray(text);
@@ -59,19 +72,6 @@ function readProductList(filePath, text) {
         console.error('Error in ' + print.fileName + ' at line ' + textSyntax.wrongLines.join(', '));
     }
 
-}
-
-function readFilesInDirectory() {
-    fs.readdir(program.path, (err, files) => {
-        if (err) throw err;
-        files.forEach((itemName) => {
-            const itemPath = path.join(program.path, itemName);
-            // const itemPath = program.path + '\\' + itemName;
-            if (isItemFile(itemPath)) {
-                getTextFromFile(itemPath, readProductList);
-            }
-        });
-    });
 }
 
 function pathIsPresent() {
